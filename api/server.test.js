@@ -34,8 +34,13 @@ describe('Tests', () => {
     })
   })
   describe('findById()', () => {
+    // let data
+    //   beforeEach(async () => {
+    //     data = await Jokes.findById('1')
+    //   })
     test('test1', async () => {
-      // expect().toMatchObject()
+      // let data = Jokes.findById('1')
+      // expect(data).toMatchObject({ id: 1, username: 'nathan', password: 1234 })
     })
     test('test2', async () => {
       // expect().toMatchObject()
