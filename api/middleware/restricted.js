@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const jwtSecret = process.env.JWT_SECRET || 'keepitsecret';
-const Jokes = require('../jokes/jokes-model')
 
 module.exports = (req, res, next) => {
   /*

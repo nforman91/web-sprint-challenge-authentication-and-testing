@@ -5,7 +5,7 @@ const jwtSecret = process.env.JWT_SECRET || 'keepitsecret';
 const Jokes = require('../jokes/jokes-model');
 const { checkUsernamePasswordSent, checkUsernameFree } = require('./auth-middleware');
 
-router.post('/register', checkUsernamePasswordSent, checkUsernameFree, (req, res) => {
+router.post('/register', checkUsernamePasswordSent, checkUsernameFree, (req, res, next) => {
   /*
     IMPLEMENT
     You are welcome to build additional middlewares to help with the endpoint's functionality.
@@ -39,10 +39,10 @@ router.post('/register', checkUsernamePasswordSent, checkUsernameFree, (req, res
       .then(saved => {
         res.status(201).json(saved)
       })
-      .catch(err)
+      .catch(next)
 });
 
-router.post('/login', checkUsernamePasswordSent, (req, res) => {
+router.post('/login', checkUsernamePasswordSent, (req, res, next) => {
   /*
     IMPLEMENT
     You are welcome to build additional middlewares to help with the endpoint's functionality.
