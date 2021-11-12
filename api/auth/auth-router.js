@@ -3,9 +3,9 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const jwtSecret = process.env.JWT_SECRET || 'keepitsecret';
 const Jokes = require('../jokes/jokes-model');
-const { checkUsernameFree } = require('./auth-middleware');
+const { checkUsernamePasswordSent, checkUsernameFree } = require('./auth-middleware');
 
-router.post('/register', checkUsernameFree, (req, res) => {
+router.post('/register', checkUsernamePasswordSent, checkUsernameFree, (req, res) => {
   /*
     IMPLEMENT
     You are welcome to build additional middlewares to help with the endpoint's functionality.
@@ -42,7 +42,7 @@ router.post('/register', checkUsernameFree, (req, res) => {
       .catch(err)
 });
 
-router.post('/login', (req, res) => {
+router.post('/login', checkUsernamePasswordSent, (req, res) => {
   /*
     IMPLEMENT
     You are welcome to build additional middlewares to help with the endpoint's functionality.
@@ -67,10 +67,23 @@ router.post('/login', (req, res) => {
       the response body should include a string exactly as follows: "invalid credentials".
   */
   let { username, password } = req.body;
+  Jokes.findBy({ username })
+      .then(([user]) => {
+        if (user && bcrypt.compareSync(password, user.password)) {
+          const token = tokenBuilder(user)
 
+          res.status(200).json({
+            message: `welcome, ${user.username}`,
+            token
+          });
+        } else {
+          next({ status: 401, message: 'invalid credentials' });
+        }
+      })
+      .catch(next);
 });
 
-function buildToken(user) {
+function tokenBuilder(user) {
     const payload = {
         subject: user.user_id,
         username: user.username,
