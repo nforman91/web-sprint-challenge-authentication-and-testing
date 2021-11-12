@@ -11,7 +11,7 @@ async function checkUsernamePasswordSent (req, res, next) {
 
 async function checkUsernameFree (req, res, next) {
     const { username } = req.body
-    const user = await Jokes.findBy({ username })
+    const [user] = await Jokes.findBy({ username })
     if(user.length){
         next({ status: 422, message: 'username taken' })
     } else {
