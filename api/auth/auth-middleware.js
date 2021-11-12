@@ -1,6 +1,6 @@
 const Jokes = require('../jokes/jokes-model')
 
-async function checkUsernamePasswordSent (req, res, next) {
+function checkUsernamePasswordSent (req, res, next) {
     const { username, password } = req.body
         if(!username || !password) {
             next({ status: 422, message: 'username and password required' })
@@ -18,7 +18,6 @@ async function checkUsernameFree (req, res, next) {
         next()
     }
 }
-
 
 module.exports = {
     checkUsernamePasswordSent,
