@@ -1,11 +1,14 @@
+const server = require('./server')
 const db = require('../data/dbConfig')
 const request = require('supertest')
 const Jokes = require('./jokes/jokes-model')
 
-// beforeAll(async () => {
-//     await db.migrate.rollback()
-//     await db.migrate.latest()
-// })
+const joke1 = { username: 'tommy', password: 123 }
+
+beforeAll(async () => {
+    await db.migrate.rollback()
+    await db.migrate.latest()
+})
 
 // beforeEach(async () => {
 //     await db.seed.run()
@@ -15,9 +18,9 @@ const Jokes = require('./jokes/jokes-model')
 //     await db.destroy()
 // })
 
-// test('is testing environment', () => {
-//   expect(process.env.NODE_ENV).toBe('testing')
-// })
+test('is testing environment', () => {
+  expect(process.env.NODE_ENV).toBe('testing')
+})
 
 // Write your tests here
 test('sanity', () => {
@@ -26,32 +29,36 @@ test('sanity', () => {
 
 describe('Tests', () => {
   describe('findBy()', () => {
-    test('test1', async () => {
+    test('INCOMPLETE find users', async () => {
       // expect().toMatchObject()
     })
-    test('test2', async () => {
+    test('INCOMPLETE find correct users', async () => {
       // expect().toMatchObject()
     })
   })
   describe('findById()', () => {
     // let data
-    //   beforeEach(async () => {
+    //   beforeAll(async () => {
     //     data = await Jokes.findById('1')
     //   })
-    test('test1', async () => {
-      // let data = Jokes.findById('1')
+    // let data = await Jokes.findById('1')
+    test('INCOMPLETE returns the correct one', () => {
       // expect(data).toMatchObject({ id: 1, username: 'nathan', password: 1234 })
     })
-    test('test2', async () => {
-      // expect().toMatchObject()
+    test('INCOMPLETE returns a real one', () => {
+      // expect(data).toBeTruthy()
     })
   })
   describe('add()', () => {
-    test('test1', async () => {
-      // expect().toMatchObject()
+    test('adds one new', async () => {
+      let joke
+      await Jokes.add(joke1)
+      jokes = await db('users')
+      expect(jokes).toHaveLength(1)
     })
-    test('test2', async () => {
-      // expect().toMatchObject()
+    test('INCOMPLETE created one', async () => {
+      // const joke = await Jokes.add(joke1)
+      // expect(joke).toMatchObject({ id: 1, username: 'tommy', password: 123 })
     })
   })
 })
