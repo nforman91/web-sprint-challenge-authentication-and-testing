@@ -18,21 +18,11 @@ server.use('/api/jokes', restrict, jokesRouter); // only logged-in users should 
 
 const Users = require('./jokes/jokes-model')
 
-// server.get("/", (req, res) => {
-//   res.status(200).json({ api: "up" });
-// });
+server.get("/", (req, res) => {
+  res.status(200).json({ api: "up" });
+});
 
-// server.get("/users", (req, res) => {
-//   Users.getAll()
-//     .then(users => {
-//       res.status(200).json(users);
-//     })
-//     .catch(error => {
-//       res.status(500).json(error);
-//     });
-// });
-
-server.get("/users/:id", (req, res) => {
+server.get("/auth/:id", (req, res) => {
   Users.findById(req.params.id)
     .then(user => {
       res.status(200).json(user)
@@ -42,7 +32,7 @@ server.get("/users/:id", (req, res) => {
     })
 });
 
-server.post("/users", async (req, res) => {
+server.post("/auth", async (req, res) => {
   Users.add(req.body)
     .then(user => {
       res.status(201).json(user)
